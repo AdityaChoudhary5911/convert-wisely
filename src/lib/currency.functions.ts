@@ -129,11 +129,13 @@ export const getTravelBudget = createServerFn({ method: "POST" })
     const targets = TRAVEL_TARGETS.filter((code) => code !== base);
     const latest = await fetchLatestRates(base, [...targets]);
 
-    const rows = TRAVEL_TARGETS.map((code) => {
+    type BudgetRow = { currency: string; rate: number; total: number };
+    const rows: BudgetRow[] = [];
+    for (const code of TRAVEL_TARGETS) {
       const rate = code === base ? 1 : latest.rates[code];
-      if (typeof rate !== "number") return null;
-      return { currency: code, rate: round(rate), total: round(data.amount * rate, 2) };
-    }).filter((row): row is { currency: string; rate: number; total: number } => row !== null);
+      if (typeof rate !== "number") continue;
+      rows.push({ currency: code, rate: round(rate), total: round(data.amount * rate, 2) });
+    }
 
     return {
       base,
