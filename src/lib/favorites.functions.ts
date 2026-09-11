@@ -39,9 +39,6 @@ export const addFavorite = createServerFn({ method: "POST" })
       .select("id, source_currency, target_currency, created_at")
       .single();
     if (error) {
-      if (error.code === "23505" || error.code === "23514" || error.code === "23000") {
-        throw new Error("That pair is already saved.");
-      }
       if (error.code === "23505") throw new Error("That pair is already saved.");
       throw new Error(error.message);
     }
