@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      conversion_history: {
+        Row: {
+          converted_amount: number
+          created_at: string
+          id: string
+          rate: number
+          source_amount: number
+          source_currency: string
+          target_currency: string
+        }
+        Insert: {
+          converted_amount: number
+          created_at?: string
+          id?: string
+          rate: number
+          source_amount: number
+          source_currency: string
+          target_currency: string
+        }
+        Update: {
+          converted_amount?: number
+          created_at?: string
+          id?: string
+          rate?: number
+          source_amount?: number
+          source_currency?: string
+          target_currency?: string
+        }
+        Relationships: []
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          source_currency: string
+          target_currency: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          source_currency: string
+          target_currency: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          source_currency?: string
+          target_currency?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
